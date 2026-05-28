@@ -917,7 +917,7 @@ function calculate(){
   if(ratio<1){
     document.getElementById('hlMain').textContent='Protection ratio '+ratio.toFixed(1)+'× — at this organisation size, risk exposure is below Veeam’s cost. Consider requesting a volume-adjusted quote from Veeam.';
   } else {
-    document.getElementById('hlMain').textContent='For every $1 invested in Veeam, $'+ratio.toFixed(1)+' in value is protected against risk.';
+    document.getElementById('hlMain').textContent='For every $1 invested in Veeam, $'+ratio.toFixed(1)+' is protected against risk.';
   }
   document.getElementById('hlSub').textContent=
     (orgName?orgName+' · ':'')+cd.name+' · '+ind.name+' · '+users.toLocaleString()+' M365 users · '+probPct+' annual probability · Generated '+today;
