@@ -1021,10 +1021,15 @@ tr.grn-row td{font-weight:700;background:#e8f7ee;color:#166534}
 .vp-item::before{content:"✓";color:#00b140;font-weight:800;flex-shrink:0}
 .disclaimer{font-size:9px;color:#94a3b8;text-align:center;border-top:1px solid #e5e7eb;padding-top:10px;margin-top:20px;line-height:1.6}
 .section-note{font-size:10px;color:#64748b;font-style:italic;margin-top:-6px;margin-bottom:10px}
+.beyond-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.beyond-item{background:#f8fafc;border:1px solid #dde3ea;border-left:3px solid #00b140;border-radius:0 6px 6px 0;padding:12px 14px}
+.beyond-title{font-size:11px;font-weight:700;color:#1d2d3e;margin-bottom:5px}
+.beyond-body{font-size:10.5px;color:#475569;line-height:1.55}
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body{background:#fff!important}
   .wrap{padding:20px}
+  .beyond-grid{grid-template-columns:1fr 1fr}
   .kpi-grid{grid-template-columns:1fr 1fr 1fr 1fr}
   .kpi.red{background:#fef2f2!important;border:1.5px solid #fca5a5!important}
   .kpi.amb{background:#fffbeb!important;border:1.5px solid #fcd34d!important}
@@ -1093,26 +1098,26 @@ tr.grn-row td{font-weight:700;background:#e8f7ee;color:#166534}
   <h2>Risk Exposure Breakdown</h2>
   <p class="section-note">Components of the total estimated cost of a single M365 data loss incident</p>
   <table>
-    <tr><th>Component</th><th style="text-align:right">Value (USD)</th><th>Basis &amp; Source</th></tr>
+    <tr><th style="width:24%">Component</th><th style="text-align:right;width:13%">Value (USD)</th><th style="width:63%">Basis &amp; Source</th></tr>
     <tr>
       <td>Productivity loss</td>
       <td style="text-align:right;font-weight:700">${fmtN(c.pl)}</td>
-      <td>${c.aff.toLocaleString()} affected users × USD ${cd.avgDailyUSD}/day × phased decay (Days 1–2: 90%, Days 3–7: 50%, Days 8–15: 20% impaired ≈ ${c.eld.toFixed(1)} effective lost days). Source: Coveware Q4 2023 + Microsoft Work Trend Index 2024.</td>
+      <td>${c.aff.toLocaleString()} users × USD ${cd.avgDailyUSD}/day × phased decay ≈ ${c.eld.toFixed(1)} effective lost days. Coveware Q4 2023; MWTI 2024.</td>
     </tr>
     <tr>
       <td>IT recovery &amp; professional services</td>
       <td style="text-align:right;font-weight:700">${fmtN(c.it)}</td>
-      <td>Base USD 15,000 (IR retainer, forensics, comms) + USD ${c.users>1000?35:50}/user. Source: Veeam Ransomware Trends Report 2024.</td>
+      <td>USD 15,000 base (IR, forensics, comms) + USD ${c.users>1000?35:50}/user. Veeam Ransomware Trends 2024.</td>
     </tr>
     <tr>
       <td>Regulatory fine (risk-weighted)</td>
       <td style="text-align:right;font-weight:700">${fmtN(c.wf)}</td>
-      <td>Gross statutory max ${fmtN(c.gf)} × ${(cd.enfProb*100).toFixed(0)}% enforcement probability. ${c.fl}</td>
+      <td>Max ${fmtN(c.gf)} × ${(cd.enfProb*100).toFixed(0)}% enforcement probability. ${c.fl.replace(/\. [A-Z].*$/,'.')}</td>
     </tr>
     <tr>
       <td>Customer impact exposure</td>
       <td style="text-align:right;font-weight:700">${fmtN(c.ci)}</td>
-      <td>${(ind.custImpactFactor*100).toFixed(1)}% of annual revenue. Source: IBM Cost of a Data Breach 2024 (Ponemon Institute).</td>
+      <td>${(ind.custImpactFactor*100).toFixed(1)}% of annual revenue. IBM Cost of a Data Breach 2024.</td>
     </tr>
     <tr class="total-row">
       <td>Total estimated cost — single incident</td>
@@ -1122,7 +1127,7 @@ tr.grn-row td{font-weight:700;background:#e8f7ee;color:#166534}
     <tr>
       <td>Annual probability of incident</td>
       <td style="text-align:right;font-weight:700">${c.probPct}</td>
-      <td>Base 35% × ${ind.riskMult}× industry factor${(c.incident==='yes'||c.incident==='unsure')?' × 1.65× prior-incident multiplier':''}</td>
+      <td>Base 35% × ${ind.riskMult}× industry multiplier${(c.incident==='yes'||c.incident==='unsure')?' × 1.65× prior-incident factor':''}</td>
     </tr>
     <tr class="final-row">
       <td>= Risk-Adjusted Annual Exposure (without Veeam)</td>
@@ -1158,6 +1163,27 @@ tr.grn-row td{font-weight:700;background:#e8f7ee;color:#166534}
       <td>Net expected value as % of Veeam investment — modelled estimate only</td>
     </tr>
   </table>
+
+  <h2>Beyond the Numbers</h2>
+  <p style="font-size:11px;color:#475569;margin-bottom:12px;line-height:1.6">The quantified exposure above captures directly measurable costs. Organisations that have experienced M365 data loss consistently report significant additional impact that no model can fully price.</p>
+  <div class="beyond-grid">
+    <div class="beyond-item">
+      <div class="beyond-title">Microsoft Shared Responsibility Gap</div>
+      <div class="beyond-body">Microsoft protects its infrastructure — not your data. Their Service Agreement explicitly places backup and recovery responsibility on the customer for Exchange Online, SharePoint, OneDrive, and Teams. Veeam closes this gap directly.</div>
+    </div>
+    <div class="beyond-item">
+      <div class="beyond-title">eDiscovery &amp; Legal Hold Readiness</div>
+      <div class="beyond-body">Granular point-in-time restore enables rapid response to legal, regulatory, or HR discovery requests. Inability to produce specific data on demand carries independent legal risk — one that grows as regulations tighten across the region.</div>
+    </div>
+    <div class="beyond-item">
+      <div class="beyond-title">Audit &amp; Compliance Evidence</div>
+      <div class="beyond-body">Immutable backup logs and documented recovery capability serve as verifiable evidence for ISO 27001, SOC 2, and regional frameworks including MAS TRM and OJK guidelines — reducing auditor scrutiny and supporting certification renewals.</div>
+    </div>
+    <div class="beyond-item">
+      <div class="beyond-title">Reputational &amp; Brand Continuity</div>
+      <div class="beyond-body">The customer impact exposure modelled above captures near-term revenue at risk. The reputational tail — press coverage, partner and supplier confidence, employee trust, and talent attraction — extends well beyond the modelled window and is intentionally excluded from the financial estimate.</div>
+    </div>
+  </div>
 
   <div class="vp-section">
     <h3>What Veeam Data Cloud for M365 delivers</h3>
