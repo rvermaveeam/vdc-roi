@@ -456,7 +456,7 @@
           <div class="kpi-sub">Without Veeam · probability-weighted · full incident cost</div>
         </div>
         <div class="kpi k-cost">
-          <div class="kpi-label">Annual Veeam Investment</div>
+          <div class="kpi-label">Annual Veeam Investment <span id="kCostEstBadge" style="display:none;font-size:9px;font-weight:700;color:#d97706;background:#fef3c7;border:1px solid #fcd34d;padding:1px 5px;border-radius:3px;vertical-align:middle;margin-left:4px;letter-spacing:.3px">ESTIMATE</span></div>
           <div class="kpi-value" id="kCost">—</div>
           <div class="kpi-sub" id="kCostSub">Including local tax</div>
         </div>
@@ -878,7 +878,8 @@ function calculate(){
   const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('kRisk').textContent=fmt(exp);
   document.getElementById('kCost').textContent=fmt(vTotal);
-  document.getElementById('kCostSub').textContent=cd.taxLabel+' inclusive';
+  document.getElementById('kCostSub').textContent=cd.taxLabel+(pricingMode==='estimate'?' inclusive · indicative estimate':' inclusive');
+  document.getElementById('kCostEstBadge').style.display=pricingMode==='estimate'?'inline':'none';
   document.getElementById('kROI').textContent=ratio.toFixed(1)+'×';
   document.getElementById('kNet').textContent=fmt(net);
   document.getElementById('costDisclaimer').textContent=pLabel+' · '+cd.taxLabel;
