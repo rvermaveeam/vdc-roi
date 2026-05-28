@@ -587,7 +587,7 @@
           </div>
           <div class="bn-item">
             <div class="bn-item-title">Audit &amp; Compliance Evidence</div>
-            <div class="bn-item-text">Immutable backup logs serve as verifiable evidence for ISO 27001, SOC 2, MAS TRM, and OJK frameworks — reducing auditor scrutiny and supporting certification renewals.</div>
+            <div class="bn-item-text" id="bnAuditText">Immutable backup logs serve as verifiable evidence for ISO 27001 and applicable regional frameworks — reducing auditor scrutiny and supporting certification renewals.</div>
           </div>
           <div class="bn-item">
             <div class="bn-item-title">Reputational &amp; Brand Continuity</div>
@@ -921,6 +921,22 @@ function calculate(){
   }
   document.getElementById('hlSub').textContent=
     (orgName?orgName+' · ':'')+cd.name+' · '+ind.name+' · '+users.toLocaleString()+' M365 users · '+probPct+' annual probability · Generated '+today;
+
+  (()=>{
+    const fw={
+      SG:{base:['PDPA','ISO 27001'],financial:['MAS TRM'],healthcare:['MOH data governance'],technology:['SOC 2']},
+      ID:{base:['UU PDP Law 27/2022','ISO 27001'],financial:['OJK POJK 11/2022']},
+      TH:{base:['PDPA (B.E. 2562)','ISO 27001'],financial:['BOT IT Risk Management']},
+      PH:{base:['Data Privacy Act (RA 10173)','ISO 27001'],financial:['BSP circular guidelines']},
+      MY:{base:['PDPA 2010','ISO 27001'],financial:['BNM RMiT']},
+      KR:{base:['PIPA','ISO 27001'],financial:['FSS IT supervision guidelines']},
+    };
+    const entry=fw[cKey]||{base:['ISO 27001']};
+    const list=[...entry.base,...(entry[iKey]||[])];
+    const fwStr=list.length>1?list.slice(0,-1).join(', ')+' and '+list[list.length-1]:list[0];
+    const el=document.getElementById('bnAuditText');
+    if(el) el.textContent='Immutable backup logs serve as verifiable evidence for '+fwStr+' — reducing auditor scrutiny and supporting certification renewals.';
+  })();
 
   document.getElementById('bdProb').textContent=probPct;
   document.getElementById('bdProbVal').textContent=probPct;
