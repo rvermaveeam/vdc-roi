@@ -231,6 +231,9 @@
     .breakdown{background:#f4f6f8!important}
     .results-bar,.value-prop{background:#1d2d3e!important}
     h2,h3{page-break-after:avoid}
+    details>*:not(summary){display:block!important}
+    .bd-src-toggle::before{content:'▾'!important}
+    .bd-source{display:block!important}
   }
 
   /* Sources */
@@ -1019,8 +1022,20 @@ tr.grn-row td{font-weight:700;background:#e8f7ee;color:#166534}
 .section-note{font-size:10px;color:#64748b;font-style:italic;margin-top:-6px;margin-bottom:10px}
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#fff!important}
   .wrap{padding:20px}
+  .kpi-grid{grid-template-columns:1fr 1fr 1fr 1fr}
+  .kpi.red{background:#fef2f2!important;border:1.5px solid #fca5a5!important}
+  .kpi.amb{background:#fffbeb!important;border:1.5px solid #fcd34d!important}
+  .kpi.grn{background:#e8f7ee!important;border:1.5px solid #6ee7a0!important}
+  .kpi.blu{background:#eff6ff!important;border:1.5px solid #93c5fd!important}
+  tr.grn-row td{background:#e8f7ee!important}
+  tr.final-row td{background:#fef2f2!important}
+  tr.total-row td{background:#f4f6f8!important}
   .vp-section{background:#1d2d3e!important}
+  h2,h3{page-break-after:avoid}
+  table{page-break-inside:avoid}
+  .vp-section{page-break-inside:avoid}
 }
 </style>
 </head>
@@ -1117,38 +1132,29 @@ tr.grn-row td{font-weight:700;background:#e8f7ee;color:#166534}
 
   <div class="reg-box">${cd.regNote}</div>
 
-  <h2>Veeam VDC Investment</h2>
+  <h2>Veeam VDC Investment &amp; ROI <span style="font-size:10px;font-weight:600;color:#dc2626;background:#fef2f2;border:1px solid #fca5a5;padding:2px 8px;border-radius:4px;vertical-align:middle;margin-left:8px;letter-spacing:.3px">ESTIMATE</span></h2>
+  <p class="section-note">All figures are modelled estimates based on published third-party research. Actual Veeam pricing will vary — request a confirmed quote from your Veeam representative.</p>
   <table>
-    <tr><th>Item</th><th style="text-align:right">Annual Cost (USD)</th><th>Notes</th></tr>
-    <tr>
-      <td>VDC base cost (before tax)</td>
-      <td style="text-align:right;font-weight:700">${fmtN(c.vBase)}</td>
-      <td>${c.users.toLocaleString()} users × USD ${c.pricePerUser.toFixed(2)}/user/yr${c.pricingMode==='quote'?' (from your quote)':' (indicative estimate)'}</td>
-    </tr>
-    <tr>
-      <td>Local tax (${cd.taxLabel})</td>
-      <td style="text-align:right;font-weight:700">${fmtN(c.vTax)}</td>
-      <td>${(cd.taxRate*100).toFixed(0)}% applied per ${cd.name} jurisdiction</td>
-    </tr>
+    <tr><th>Metric</th><th style="text-align:right">Value (USD)</th><th>Basis</th></tr>
     <tr class="grn-row">
-      <td>Total Annual Cost of Veeam VDC</td>
+      <td>Annual Veeam Investment (${cd.taxLabel} inclusive)</td>
       <td style="text-align:right">${fmtN(c.vTotal)}</td>
-      <td></td>
+      <td>${c.pricingMode==='quote'?'Based on your provided quote':'Indicative estimate — USD '+c.pricePerUser.toFixed(2)+'/user/yr + '+cd.taxLabel+'. Contact Veeam for a confirmed quote.'}</td>
     </tr>
     <tr>
-      <td>Protection ratio</td>
-      <td style="text-align:right;font-weight:700">${c.ratio.toFixed(1)}×</td>
-      <td>Risk-adjusted exposure ÷ Veeam annual cost</td>
+      <td><strong>Protection Ratio</strong></td>
+      <td style="text-align:right;font-size:20px;font-weight:800;color:#166534">${c.ratio.toFixed(1)}×</td>
+      <td>Every USD 1 invested in Veeam protects ${c.ratio.toFixed(1)} in risk-adjusted expected annual value</td>
     </tr>
     <tr>
-      <td>Expected annual loss avoidance</td>
-      <td style="text-align:right;font-weight:700">${fmtN(c.net)}</td>
-      <td>Risk-adjusted exposure minus Veeam cost — expected value, not a guaranteed saving</td>
+      <td><strong>Expected Annual Loss Avoidance</strong></td>
+      <td style="text-align:right;font-weight:700;color:#166534">${fmtN(c.net)}</td>
+      <td>Risk-adjusted exposure minus Veeam cost — expected value basis, not a guaranteed saving</td>
     </tr>
-    <tr>
-      <td>Return on investment (expected value basis)</td>
-      <td style="text-align:right;font-weight:700">${roiPct}%</td>
-      <td>Net expected value as % of Veeam investment</td>
+    <tr class="final-row">
+      <td><strong>Return on Investment (expected value basis)</strong></td>
+      <td style="text-align:right;font-size:16px;font-weight:800">${roiPct}%</td>
+      <td>Net expected value as % of Veeam investment — modelled estimate only</td>
     </tr>
   </table>
 
