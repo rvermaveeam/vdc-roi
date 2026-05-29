@@ -334,6 +334,7 @@
           <option value="PH">Philippines</option>
           <option value="MY">Malaysia</option>
           <option value="KR">South Korea</option>
+          <option value="VN">Vietnam</option>
         </select>
         <div class="field-error" id="err-country">Please select your country.</div>
       </div>
@@ -697,6 +698,7 @@ const COUNTRIES = {
   PH:{name:'Philippines',taxRate:0.12,taxLabel:'VAT 12%',avgDailyUSD:50,fineCapUSD:88000,finePct:null,finePctMAS:null,fineLabel:'Philippines Data Privacy Act (RA 10173) — max PHP 5,000,000 per violation plus potential imprisonment of responsible officers. NPC enforcement record cited.',enfProb:0.35,regNote:'<strong>Philippines — Data Privacy Act &amp; NPC:</strong> The National Privacy Commission is one of the more active data protection regulators in ASEAN, with a documented history of investigations and enforcement actions. Critically, the law provides for imprisonment of officers responsible for breaches — making this a personal liability issue. Each violation can be treated as a separate offence, meaning fines can stack in multi-workload incidents.'},
   MY:{name:'Malaysia',taxRate:0.08,taxLabel:'SST 8%',avgDailyUSD:75,fineCapUSD:107000,finePct:null,finePctMAS:null,fineLabel:'Malaysia PDPA 2010 — max MYR 500,000. Amendment bill in progress; penalties expected to increase materially.',enfProb:0.25,regNote:'<strong>Malaysia — PDPA (amendment pending):</strong> Malaysia\'s PDPA is currently under active revision. The amendment bill is expected to raise penalty thresholds significantly to align with regional peers. Bank Negara Malaysia also applies separate technology risk requirements to financial sector entities.'},
   KR:{name:'South Korea',taxRate:0.10,taxLabel:'VAT 10%',avgDailyUSD:198,fineCapUSD:null,finePct:0.03,finePctMAS:null,fineLabel:'South Korea PIPA (amended 2023) — max 3% of annual turnover. PIPC enforcement is among the most rigorous in Asia.',enfProb:0.40,regNote:'<strong>South Korea — PIPA:</strong> South Korea\'s Personal Information Protection Act is the closest equivalent to GDPR in Asia — comprehensive in scope, strictly enforced, and with penalties that scale with revenue. The PIPC has demonstrated willingness to impose near-maximum fines against large organisations. At 3% of annual turnover, this is the single largest regulatory fine exposure in the ASEAN-plus region modelled in this calculator.'},
+  VN:{name:'Vietnam',taxRate:0.10,taxLabel:'VAT 10%',avgDailyUSD:18,fineCapUSD:10000,finePct:null,finePctMAS:null,fineLabel:'Vietnam PDPD — Decree 13/2023/ND-CP (in force 1 Jul 2023). Administrative fine cap ~USD 10,000 (VND 100M) under current penalty framework; expected to increase as enforcement infrastructure matures.',enfProb:0.15,regNote:'<strong>Vietnam — PDPD (Decree 13/2023):</strong> Vietnam\'s first comprehensive data protection regulation covers all organisations processing personal data of Vietnamese residents, explicitly including unauthorised disclosure, leakage, and destruction of personal data. Penalties under the current administrative framework are modest (~USD 10,000), but the legal obligation is clear and enforcement is expected to intensify as the Ministry of Public Security\'s regulatory capacity develops. The modelled 15% enforcement probability reflects the regulation\'s early stage — organisations that demonstrate compliance now will be well-positioned as scrutiny increases.'},
 };
 const INDUSTRIES = {
   financial:    {name:'Financial Services & Insurance',  riskMult:1.4,custImpactFactor:0.010},
@@ -937,6 +939,7 @@ function calculate(){
       PH:{base:['Data Privacy Act (RA 10173)','ISO 27001'],financial:['BSP circular guidelines']},
       MY:{base:['PDPA 2010','ISO 27001'],financial:['BNM RMiT']},
       KR:{base:['PIPA','ISO 27001'],financial:['FSS IT supervision guidelines']},
+      VN:{base:['PDPD (Decree 13/2023)','ISO 27001'],financial:['SBV Circular 09/2020']},
     };
     const entry=fw[cKey]||{base:['ISO 27001']};
     const list=[...entry.base,...(entry[iKey]||[])];
@@ -971,6 +974,7 @@ function calculate(){
     PH:'<strong>Philippines Data Privacy Act:</strong> RA 10173 — max PHP 5,000,000 per violation plus potential imprisonment of responsible officers. NPC is one of ASEAN\'s more active regulators. Enforcement probability: 35%.',
     MY:'<strong>Malaysia PDPA:</strong> PDPA 2010 — max MYR 500,000. Amendment bill in progress; penalties expected to increase materially. Enforcement probability: 25%.',
     KR:'<strong>South Korea PIPA:</strong> Amended 2023 — max 3% of annual turnover. PIPC is among Asia\'s most active and rigorous data protection regulators. Enforcement probability: 40%.',
+    VN:'<strong>Vietnam PDPD — Decree 13/2023/ND-CP:</strong> In force 1 July 2023 — applies to all organisations processing personal data of Vietnamese residents, including data loss through breaches. Administrative fine cap ~USD 10,000 (VND 100M) under current penalty framework; expected to increase as enforcement matures. Enforcement probability: 15% reflecting early-stage regulatory infrastructure.',
   };
   const srcItems=[
     '<strong>Ransomware attack prevalence:</strong> Veeam Data Protection Trends Report 2025 — 69% of organisations surveyed experienced a ransomware attack in 2024. Used as market context.',
