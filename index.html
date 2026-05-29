@@ -246,6 +246,11 @@
   /* Sources */
   .sources-card{background:white;border-radius:12px;padding:24px 32px;box-shadow:0 1px 6px rgba(0,0,0,.07);margin-bottom:24px}
   .src-title{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px}
+  .src-summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
+  .src-summary::-webkit-details-marker{display:none}
+  .src-summary::after{content:'▸ expand';font-size:10px;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0}
+  details[open] .src-summary::after{content:'▾ collapse'}
+  details[open] .src-summary{margin-bottom:12px}
   .src-list{list-style:none}
   .src-list li{font-size:11.5px;color:var(--muted);padding:5px 0;border-bottom:1px solid var(--gray-bg);line-height:1.5}
   .src-list li:last-child{border-bottom:none}
@@ -668,9 +673,11 @@
 
     <!-- Sources -->
     <div class="sources-card">
-      <div class="src-title">Assumptions &amp; Sources — Methodology Notes</div>
-      <ul class="src-list" id="srcList"></ul>
-      <div class="disclaimer">This calculator is an illustrative presales tool. All figures are modelled estimates derived from published third-party research and publicly available regulatory frameworks. Actual costs, probabilities, and penalties will vary by organisation. This tool does not constitute legal, financial, or compliance advice. &copy; Veeam Software</div>
+      <details>
+        <summary class="src-title src-summary">Assumptions &amp; Sources — Methodology Notes</summary>
+        <ul class="src-list" id="srcList" style="margin-top:12px"></ul>
+        <div class="disclaimer">This calculator is an illustrative presales tool. All figures are modelled estimates derived from published third-party research and publicly available regulatory frameworks. Actual costs, probabilities, and penalties will vary by organisation. This tool does not constitute legal, financial, or compliance advice. &copy; Veeam Software</div>
+      </details>
     </div>
 
   </div><!-- /results -->
