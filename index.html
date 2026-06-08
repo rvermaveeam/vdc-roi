@@ -1013,7 +1013,7 @@ tr.exposure-row td.bd-val-col {
 
     <div id="quoteInputWrap" style="display:none; margin-top:14px">
       <div class="form-group">
-        <label>Veeam quote — total annual cost (USD) <span class="hint">enter your full annual total, not per-user</span></label>
+        <label>Veeam quote — total annual cost (USD) <span class="hint">enter your tax-inclusive total, not per-user</span></label>
         <input type="number" id="quotedTotal" placeholder="e.g. 450000" min="1"
                onchange="updateInvestPreview(); clearErr('quote')"
                oninput="updateInvestPreview(); clearErr('quote')">
@@ -1440,12 +1440,13 @@ function calculate() {
   if (pricingMode === 'quote') {
     const qt = parseFloat(document.getElementById('quotedTotal').value);
     if (!qt || qt <= 0) { showErr('quote', 'Please enter your Veeam quote total.'); return; }
-    pricePerUser = qt / users;
-    pLabel = 'Your quote · USD ' + pricePerUser.toFixed(2) + '/user/yr (derived)';
+    // Quote is tax-inclusive — back out the local tax rate to get the base
+    pricePerUser = (qt / (1 + cd.taxRate)) / users;
+    pLabel = 'Your quote · USD ' + (qt / users).toFixed(2) + '/user/yr (tax-incl.)';
   }
   const vBase  = users * pricePerUser;
   const vTax   = vBase * cd.taxRate;
-  const vTotal = vBase + vTax;
+  const vTotal = vBase + vTax; // equals the entered quote amount
 
   // Probability
   const hadInc = (incident === 'yes' || incident === 'unsure');
