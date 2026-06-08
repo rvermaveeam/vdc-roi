@@ -873,8 +873,8 @@ function calculate(){
   if(pricingMode==='quote'){
     const qt=parseFloat(document.getElementById('quotedTotal').value);
     if(!qt||qt<=0){showErr('quote','Please enter your Veeam quote total.');return;}
-    pricePerUser=qt/users;
-    pLabel='Your quote · USD '+pricePerUser.toFixed(2)+'/user/yr (derived)';
+    pricePerUser=(qt/(1+cd.taxRate))/users;
+    pLabel='Your quote · USD '+(qt/users).toFixed(2)+'/user/yr (tax-incl.)';
   }
   const vBase=users*pricePerUser;
   const vTax=vBase*cd.taxRate;
